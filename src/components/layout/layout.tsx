@@ -23,8 +23,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100vw;
 `;
 
 const Main = styled.main`
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
     flex: 1;
 `;
