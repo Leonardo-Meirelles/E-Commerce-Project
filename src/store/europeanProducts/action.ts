@@ -7,6 +7,6 @@ export const getEuropeanProducts = (): AppThunk => {
 
         const products = await getEuropeanProductsAllService()
 
-        dispatch({type: 'GET_PRODUCTS', data: products.data})
+        dispatch({type: 'GET_PRODUCTS_EUROPEAN', data: products.data})
     }
 }

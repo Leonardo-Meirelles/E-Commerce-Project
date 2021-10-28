@@ -1,6 +1,6 @@
 import { http } from '../config/http'
 
-const path = '/europeanProducts'
+const path = '/products/european'
 
 export const getEuropeanProductsAllService = async () => (
     await http.get(path)

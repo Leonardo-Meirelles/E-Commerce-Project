@@ -8,17 +8,14 @@ interface InitialState {
 };
 
 type Products = {
-    hasDiscount: boolean,
-    name: string,
-    gallery: string[],
-    description: string,
-    price: string,
-    discountValue: string,
-    details: {
-        adjective: string,
-        material: string,
-    },
-    id: string,
+    nome: string,
+    descricao: string,
+    categoria: string,
+    imagem: string,
+    preco: string,
+    material: string,
+    departamento: string,
+    id: string
 }
 
 const INITIAL_STATE: InitialState = {
@@ -28,7 +25,7 @@ const INITIAL_STATE: InitialState = {
 const reducer = (state = INITIAL_STATE, action:ActionProps) => {
 
     switch (action.type) {
-        case 'GET_PRODUCTS_EUROPEAN':
+        case 'GET_PRODUCTS_BRAZILIAN':
             return {...state, products: action.data}
     
         default:

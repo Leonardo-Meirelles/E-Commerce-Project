@@ -1,11 +1,15 @@
 import { Action, applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk, { ThunkAction } from 'redux-thunk';
-import europeanProductsReducer from './europeanProducts/reducer'
+import europeanProductsReducer from './europeanProducts/reducer';
+import brazilianProductsReducer from './brazilianProducts/reducer';
+import productNamesReducer from './productNames/reducer';
 import openModalReducer from './openModal/reducer'
 
 const reducers = combineReducers({
     europeanProducts: europeanProductsReducer,
+    brazilianProducts: brazilianProductsReducer,
+    productNames: productNamesReducer,
     modal: openModalReducer
 });
 

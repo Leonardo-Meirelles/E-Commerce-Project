@@ -1,14 +1,12 @@
 import { Skeleton } from "@mui/material";
-import { RouteComponentProps } from "@reach/router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { BuyModal } from "../components/buyModal/buyModal";
-import { ProductCard } from "../components/products/productCard";
-import { RootState } from "../store";
-import { getEuropeanProducts } from "../store/europeanProducts/action";
+import { ProductCard } from "./productCard";
+import { RootState } from "../../store";
+import { getEuropeanProducts } from "../../store/europeanProducts/action";
 
-export function Products(props: RouteComponentProps) {
+export function EuropeanProducts () {
 
     const dispatch = useDispatch()
 
@@ -21,7 +19,6 @@ export function Products(props: RouteComponentProps) {
     ));
 
     return (
-        <Container>
             <CardContent>
                 {europeanProducts.length > 0 ?
 
@@ -35,22 +32,11 @@ export function Products(props: RouteComponentProps) {
                     </>
                 }
             </CardContent>
-            <BuyModal />
-        </Container>
     )
 };
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 85rem;
-`;
-
 const CardContent = styled.div`
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 2rem;
 `;

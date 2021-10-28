@@ -1,8 +1,22 @@
 import styled from "styled-components";
 import { TiShoppingCart } from "react-icons/ti";
 import { Link } from "@reach/router";
+import { Autocomplete, TextField } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { saveProductNames } from "../../store/productNames/action";
+import { RootState } from "../../store";
 
 export function Header() {
+
+    const dispatch = useDispatch()
+
+    const searchHandler = () => dispatch(saveProductNames())
+
+    const hasProducts = useSelector((state: RootState) => state.europeanProducts.products)
+
+    const names = useSelector((state: RootState) => state.productNames.productNames)
+
 
     return (
         <Container>
@@ -11,13 +25,22 @@ export function Header() {
                     <h1>Logo da loja</h1>
                 </Logo>
 
+                <Autocomplete
+                    disablePortal
+                    options={names}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => (
+                        <STextField
+                            {...params}
+                            onClick={() => searchHandler()}
+                        />)}
+                />
+
                 <div>
                     <Link to="/">
                         <Button>Home</Button>
                     </Link>
-                    <Link to="/products">
-                        <Button>Products</Button>
-                    </Link>
+
                     <Button>
                         <TiShoppingCart />
                     </Button>
@@ -32,7 +55,7 @@ const Container = styled.div`
     justify-content: center;
     width: 100%;
     background: var(--black);
-    padding: 0.5rem 1.5rem;
+    padding: 2rem 1.5rem;
 `;
 
 const Content = styled.div`
@@ -57,3 +80,8 @@ const Button = styled.button`
 const Logo = styled.div`
     color: var(--white);
 `;
+
+const STextField = styled(TextField)`
+    background-color: white;
+    border-radius: 0.5rem;
+`
