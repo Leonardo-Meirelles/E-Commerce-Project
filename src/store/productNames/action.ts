@@ -1,14 +1,14 @@
-import { getAllProductsNamesService } from "../../services/getAllProductsNamesService"
-import { AppDispatch, AppThunk } from "../index"
+import { getAllProductsNamesService } from "../../services/getAllProductsNamesService";
+import { AppDispatch, AppThunk } from "../index";
 
 export const saveProductNames = (): AppThunk => {
 
     return async (dispatch: AppDispatch, getState) => {
 
-        const names = await getAllProductsNamesService()
+        const names = await getAllProductsNamesService();
         
-        const allNames = [...names.data.namesBr, ...names.data.namesEu]
+        const allNames = [...names.data.namesBr, ...names.data.namesEu];
 
-        dispatch({ type: 'SAVE_NAMES', data: allNames})
-    }
-}
+        dispatch({ type: 'SAVE_NAMES', data: allNames});
+    };
+};

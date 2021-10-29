@@ -2,7 +2,7 @@ import { Button, Card, CardContent, Pagination, Typography } from "@mui/material
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleModal } from './../../store/openModal/action';
+import { assetsModal, toggleModal } from './../../store/openModal/action';
 
 export function BrazilianCard({ brazilianProductInfo }: any) {
 
@@ -14,12 +14,24 @@ export function BrazilianCard({ brazilianProductInfo }: any) {
         setPage(value)
     };
 
-    const handleClick = () => dispatch(toggleModal())
+    const { nome, descricao, categoria, imagem, preco, material, departamento, id } = brazilianProductInfo;
+    
+    const handleClick = () => {
 
-    const { nome, descricao, categoria, imagem, preco, material, departamento } = brazilianProductInfo
+        const data ={
+            name: nome,
+            price: preco,
+            vendor: 'brazilian',
+            id
+        };
+
+        dispatch(toggleModal());
+        
+        dispatch(assetsModal(data));
+    };
 
     return (
-        <Card sx={{minWidth: 300, maxWidth: 300, margin: 2 }}>
+        <Card sx={{ minWidth: 300, maxWidth: 300, margin: 2 }}>
             <SCardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     {nome}
@@ -53,7 +65,7 @@ export function BrazilianCard({ brazilianProductInfo }: any) {
                     variant="outlined"
                     onClick={() => handleClick()}
                 >
-                    Comprar
+                    Buy
                 </Button>
             </SCardContent>
         </Card>
@@ -67,8 +79,8 @@ const SCardContent = styled(CardContent)`
     text-align: center;
     align-items: center;
     height: 100%;
-`
+`;
 
 const Image = styled.img`
     width: 100%;
-`
+`;

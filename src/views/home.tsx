@@ -9,15 +9,15 @@ import { EuropeanProducts } from "../components/products/europeanProducts";
 
 export function Home(props: RouteComponentProps) {
 
-    const [show, setShow] = useState<string>('european')
+    const [show, setShow] = useState<string>('european');
 
     const handleClick = (choice: string) => {
         setShow(choice)
-    }
+    };
 
     return (
         <Container>
-            <SButtonGroup variant="text" aria-label="text button group">
+            <SButtonGroup variant="text" >
                 <Button onClick={() => handleClick('european')} >European Products</Button>
                 <Button onClick={() => handleClick('brazilian')} >Brazilian Products</Button>
             </SButtonGroup>

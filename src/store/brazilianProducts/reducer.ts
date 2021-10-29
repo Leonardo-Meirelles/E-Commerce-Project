@@ -16,7 +16,7 @@ type Products = {
     material: string,
     departamento: string,
     id: string
-}
+};
 
 const INITIAL_STATE: InitialState = {
     products: []

@@ -29,11 +29,11 @@ const reducer = (state = INITIAL_STATE, action:ActionProps) => {
 
     switch (action.type) {
         case 'GET_PRODUCTS_EUROPEAN':
-            return {...state, products: action.data}
+            return {...state, products: action.data};
     
         default:
             return state;
-    }
+    };
 };
 
 export default reducer

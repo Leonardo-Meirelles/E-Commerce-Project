@@ -2,13 +2,13 @@ import { Skeleton } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ProductCard } from "./productCard";
+import { EuropeanCard } from "./europeanCard";
 import { RootState } from "../../store";
 import { getEuropeanProducts } from "../../store/europeanProducts/action";
 
 export function EuropeanProducts () {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getEuropeanProducts())
@@ -23,7 +23,7 @@ export function EuropeanProducts () {
                 {europeanProducts.length > 0 ?
 
                     europeanProducts.map((product) => (
-                        <ProductCard key={product.id} productInfo={product} />
+                        <EuropeanCard key={product.id} productInfo={product} />
                     )) :
                     <>
                         <Skeleton variant="rectangular" width={300} height={150} />

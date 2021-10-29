@@ -8,7 +8,7 @@ import { BrazilianCard } from "./brazilianCard";
 
 export function BrazilianProducts () {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getBrazilianProducts())

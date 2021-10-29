@@ -2,9 +2,9 @@ import { Button, Card, CardContent, Pagination, Typography } from "@mui/material
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { toggleModal } from './../../store/openModal/action';
+import { assetsModal, toggleModal } from '../../store/openModal/action';
 
-export function ProductCard({ productInfo }: any) {
+export function EuropeanCard({ productInfo }: any) {
 
     const dispatch = useDispatch();
 
@@ -13,10 +13,23 @@ export function ProductCard({ productInfo }: any) {
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value)
     };
+    
+    const { name, gallery, description, price, discountValue, id } = productInfo;
+    
+    const handleClick = () => {
 
-    const handleClick = () => dispatch(toggleModal())
+        const data ={
+            name,
+            price,
+            vendor: 'european',
+            id
+        };
 
-    const { name, gallery, description, price, discountValue } = productInfo
+        dispatch(toggleModal());
+        
+        dispatch(assetsModal(data));
+    };
+
 
     return (
         <Card sx={{minWidth: 300, maxWidth: 300, margin: 2 }}>
@@ -53,7 +66,7 @@ export function ProductCard({ productInfo }: any) {
                     variant="outlined"
                     onClick={() => handleClick()}
                 >
-                    Comprar
+                    Buy
                 </Button>
             </SCardContent>
         </Card>
@@ -67,8 +80,8 @@ const SCardContent = styled(CardContent)`
     text-align: center;
     align-items: center;
     height: 100%;
-`
+`;
 
 const Image = styled.img`
     width: 100%;
-`
+`;

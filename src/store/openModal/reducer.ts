@@ -1,22 +1,33 @@
 interface ActionProps {
     type: string;
-    data: boolean;
+    data: any;
 };
 
 interface InitialState {
     open: boolean;
+    cart: {}[]
 };
 
 const INITIAL_STATE: InitialState = {
-    open: false
+    open: false,
+    cart: []
 };
 
-const reducer = (state = INITIAL_STATE, action:ActionProps) => {
+const reducer = (state = INITIAL_STATE, action: ActionProps) => {
 
     switch (action.type) {
         case 'TOGGLE_MODAL':
-            return {open: action.data};
-    
+            return { ...state, open: action.data };
+
+        case 'SET_ASSETS':
+            return {
+                ...state,
+                cart: [
+                    ...state.cart,
+                    action.data
+                ]
+            };
+
         default:
             return state;
     };
