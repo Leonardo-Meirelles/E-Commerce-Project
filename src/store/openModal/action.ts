@@ -17,3 +17,14 @@ export const assetsModal = (data: any): AppThunk => {
         dispatch({ type: 'SET_ASSETS', data: data});
     };
 };
+
+export const deleteOneAsset = (data: number): AppThunk => {
+
+    return async (dispatch: AppDispatch, getState) => {
+
+        const { modal } = getState();       
+        modal.cart.splice(data, 1)
+        
+        dispatch({ type: 'DELETE_ASSETS', data: modal.cart});
+    };
+};

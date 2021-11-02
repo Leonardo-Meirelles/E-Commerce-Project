@@ -27,6 +27,13 @@ const reducer = (state = INITIAL_STATE, action: ActionProps) => {
                     action.data
                 ]
             };
+        case 'DELETE_ASSETS':
+            return {
+                ...state,
+                cart: [
+                    ...action.data
+                ]
+            }
 
         default:
             return state;

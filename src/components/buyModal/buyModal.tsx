@@ -4,7 +4,9 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { postOrderService } from '../../services/ordersServices';
 import { RootState } from '../../store';
-import { toggleModal } from '../../store/openModal/action';
+import { deleteOneAsset, toggleModal } from '../../store/openModal/action';
+import { AiFillDelete } from "react-icons/ai";
+import styled from 'styled-components';
 
 export interface UserProps {
     name: string;
@@ -18,9 +20,7 @@ export function BuyModal() {
         email: ''
     });
 
-    const [orderData, setOrderData] = useState([
-
-    ]);
+    const [orderData, setOrderData] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -36,6 +36,11 @@ export function BuyModal() {
             ...prevState,
             [event.target.name]: event.target.value
         }));
+    };
+
+    const handleDelete = (id: number) => {
+
+        dispatch(deleteOneAsset(id))
     };
 
     const handleSubmit = async () => {
@@ -54,9 +59,9 @@ export function BuyModal() {
             });
 
             dispatch(toggleModal());
-            
-        } catch(error) {
-            
+
+        } catch (error) {
+
             toast.error('Something went wrong with your request');
             throw error;
         };
@@ -73,7 +78,7 @@ export function BuyModal() {
         >
             <Box sx={style} display='flex' flexDirection='column'>
                 <Typography variant='h6' component='h2'>
-                    Faça sua compra agora
+                    Complete your order:
                 </Typography>
                 <br />
                 <TextField
@@ -110,6 +115,9 @@ export function BuyModal() {
                                 <TableCell>{product.name}</TableCell>
                                 <TableCell>{product.price}</TableCell>
                                 <TableCell>
+                                    <SButton onClick={() => handleDelete(index)}>
+                                        <AiFillDelete />
+                                    </SButton>
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -130,16 +138,22 @@ export function BuyModal() {
 };
 
 const style = {
-
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    minWidth: 400,
+    minWidth: 300,
     width: '40%',
+    height: '100%',
     overflow: 'scroll',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
+
+const SButton = styled.button`
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+`

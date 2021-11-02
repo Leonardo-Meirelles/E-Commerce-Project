@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { TiShoppingCart } from "react-icons/ti";
+import { BsSearch } from "react-icons/bs";
+import { FaShopify } from "react-icons/fa";
 import { Link, navigate } from "@reach/router";
 import { Autocomplete, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,9 +14,9 @@ import { toggleModal } from "../../store/openModal/action";
 
 export function Header() {
 
-    const [productName, setProductName] = useState();
-
     const dispatch = useDispatch();
+
+    const [productName, setProductName] = useState<any>();
 
     useEffect(() => {
 
@@ -23,38 +25,39 @@ export function Header() {
 
     const names = useSelector((state: RootState) => state.productNames.productNames);
 
-    useEffect(() => {
+    const searchProduct = async () => {
 
-        async function sendProduct() {
+        const find = names.find((product: any) => {
+            return product.label === productName
+        });
 
-            const find = names.find((product: any) => {
-                return product.label === productName
-            });
+        if (find?.vendor === 'brazilian') {
 
-            if (find?.vendor === 'brazilian') {
+            const resultBr = await getBrazilianProductByIdService(find.id);
 
-                const resultBr = await getBrazilianProductByIdService(find.id);
+            await navigate('/product', { state: { data: resultBr.data, vendor: 'brazilian' } });
 
-                await navigate('/product', { state: { data: resultBr.data, vendor: 'brazilian' } });
+        } else if (find?.vendor === 'european') {
 
-            } else if (find?.vendor === 'european') {
+            const resultEu = await getEuropeanProductByIdService(find.id);
 
-                const resultEu = await getEuropeanProductByIdService(find.id);
-
-                await navigate('/product', { state: { data: resultEu.data, vendor: 'european' } });
-            }
+            await navigate('/product', { state: { data: resultEu.data, vendor: 'european' } });
         }
-        sendProduct();
+    }
 
-    }, [productName]);
+    const handleClickOpenModal = () => dispatch(toggleModal());
 
-    const handleClick = () => dispatch(toggleModal());
+    const handleChange = (event: any) => {
+        event.persist()
+        let text = event.target.textContent
+        setProductName(text)
+    }
 
     return (
         <Container>
             <Content>
                 <Logo>
-                    <h1>Logo da loja</h1>
+                    <FaShopify />
                 </Logo>
 
                 <Autocomplete
@@ -62,13 +65,16 @@ export function Header() {
                     options={names}
                     sx={{ width: 300 }}
                     autoSelect={true}
+                    onChange={handleChange}
                     renderInput={(params) => (
                         <SearchDiv>
-                            <h3>Press enter to search</h3>
                             <STextField
                                 {...params}
-                                onKeyPress={(event: any) => event.code === 'Enter' ? setProductName(() => event.target.value) : null}
+                                onKeyPress={(event: any) => searchProduct()}
                             />
+                            <SButton onClick={() => searchProduct()} >
+                                <BsSearch />
+                            </SButton>
 
                         </SearchDiv>
                     )}
@@ -76,12 +82,12 @@ export function Header() {
 
                 <div>
                     <Link to="/">
-                        <Button>Home</Button>
+                        <SButton>Home</SButton>
                     </Link>
 
-                    <Button onClick={() => handleClick()} >
+                    <SButton onClick={() => handleClickOpenModal()} >
                         <TiShoppingCart />
-                    </Button>
+                    </SButton>
                 </div>
             </Content>
         </Container>
@@ -101,9 +107,13 @@ const Content = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 85rem;
+
+    @media only screen and (max-width: 540px) {
+        flex-direction: column;
+    }
 `;
 
-const Button = styled.button`
+const SButton = styled.button`
     font-size: 1.25rem;
     padding: 0.75rem;
     border: 0;
@@ -116,6 +126,7 @@ const Button = styled.button`
 `;
 
 const Logo = styled.div`
+font-size: 4rem;
     color: var(--white);
 `;
 
@@ -126,7 +137,16 @@ const STextField = styled(TextField)`
 
 const SearchDiv = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     color: var(--white);
+
+    button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        color: var(--white);
+        &:hover {
+            filter: brightness(0.8);
+        }
+    }
 `;
