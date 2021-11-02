@@ -7,6 +7,7 @@ import { RootState } from '../../store';
 import { deleteOneAsset, toggleModal } from '../../store/openModal/action';
 import { AiFillDelete } from "react-icons/ai";
 import styled from 'styled-components';
+import CloseImg from '../../assets/images/close.svg'
 
 export interface UserProps {
     name: string;
@@ -77,6 +78,9 @@ export function BuyModal() {
             onClose={handleClose}
         >
             <Box sx={style} display='flex' flexDirection='column'>
+                <CloseButton onClick={handleClose}>
+                    <img src={CloseImg} alt="Close modal" />
+                </CloseButton>
                 <Typography variant='h6' component='h2'>
                     Complete your order:
                 </Typography>
@@ -106,6 +110,7 @@ export function BuyModal() {
                             <TableCell>ID</TableCell>
                             <TableCell>Product</TableCell>
                             <TableCell>Price</TableCell>
+                            <TableCell>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     {productsToBuy.map((product, index) => (
@@ -144,13 +149,25 @@ const style = {
     transform: 'translate(-50%, -50%)',
     minWidth: 300,
     width: '40%',
-    height: '100%',
+    maxHeight: '100%',
     overflow: 'scroll',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
 };
+
+const CloseButton = styled.button`
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    border: 0;
+    background: transparent;
+    transition: filter 0.2s;
+        &:hover {
+            filter: brightness(0.6);
+        }
+`
 
 const SButton = styled.button`
     border: 0;
